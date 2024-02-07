@@ -3,6 +3,7 @@ const app = express();
 const dotenv = require("dotenv");
 const userRoutes = require('./routes/userRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
+const incomeRoutes = require('./routes/incomeRoutes');
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ app.get("/", (req, res) => {
 });
 app.use('/api/users', userRoutes);
 app.use('/api/categories', categoryRoutes); 
+app.use('/api/incomes', incomeRoutes); 
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
