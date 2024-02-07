@@ -33,7 +33,32 @@ const getIncomeListByUserId = async ({ userId, offset, limit }) => {
   }
 };
 
+// Function to get user by id
+const getIncomeById = async (id) => {
+  try {
+    const income = await db.Incomes.findByPk(id);
+    return income;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+// Function to update user token
+const updateIncomeData = async ({ updateData, incomeId }) => {
+  try {
+    const update_data = await db.Incomes.update(
+      updateData ,
+      { where: { id: incomeId } }
+    );
+    return update_data;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
 module.exports = {
   createIncome,
   getIncomeListByUserId,
+  getIncomeById,
+  updateIncomeData,
 };
