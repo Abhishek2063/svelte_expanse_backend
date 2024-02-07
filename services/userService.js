@@ -1,7 +1,17 @@
 // services/userService.js
 const validateUserInput = require("../lib/validation/userStoreValidation");
-const  db  = require("../models"); // Assuming you have defined your User model
+const db = require("../models"); // Assuming you have defined your User model
 const bcrypt = require("bcrypt");
+
+// Function to get user by email
+const getUserByEmail = async (email) => {
+  try {
+    const user = await db.User.findOne({ where: { email } });
+    return user;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
 
 const createUser = async (userData) => {
   try {
@@ -31,9 +41,7 @@ const createUser = async (userData) => {
 
     // Check if the email already exists in the database
     if (email) {
-      const existingUser = await db.User.findOne({
-        where: { email },
-      });
+      const existingUser = await getUserByEmail(email);
 
       // If the email is already taken, return an error response
       if (existingUser) {
@@ -60,7 +68,6 @@ const createUser = async (userData) => {
       data: newUser,
     };
   } catch (error) {
-    console.log(error);
     return {
       success: false,
       status_code: 500,
@@ -70,6 +77,29 @@ const createUser = async (userData) => {
   }
 };
 
+// Function to update user token
+const updateUserToken = async (userId, token) => {
+  try {
+    await db.User.update({ token }, { where: { id: userId } });
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+
+// Function to get user by id
+const getUserById = async (id) => {
+  try {
+    const user = await db.User.findOne({ where: { id } });
+    return user;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
 module.exports = {
   createUser,
+  getUserByEmail,
+  updateUserToken,
+  getUserById
 };

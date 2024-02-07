@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const dotenv = require("dotenv");
 const userRoutes = require('./routes/userRoutes');
+const categoryRoutes = require('./routes/categoryRoutes');
 
 dotenv.config();
 
@@ -15,6 +16,7 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 app.use('/api/users', userRoutes);
+app.use('/api/categories', categoryRoutes); 
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
