@@ -87,29 +87,47 @@ const updateIncome = async (req, res) => {
     if (!income) {
       return sendResponse(res, 404, false, "Income not found", null);
     }
-  
-    const updateData = {}
-    if(amount){
-      updateData.amount = amount
-    }
-    if(description){
-      updateData.description = description
-    }
-    if(category_id){
-      updateData.category_id = category_id
-    }
-    if(user_id){
-      updateData.user_id = user_id
-    }
-    if(date){
-      updateData.date =  new Date(date)
-    }
-    
-    
 
-     await incomeService.updateIncomeData({updateData,incomeId});
+    const updateData = {};
+    if (amount) {
+      updateData.amount = amount;
+    }
+    if (description) {
+      updateData.description = description;
+    }
+    if (category_id) {
+      updateData.category_id = category_id;
+    }
+    if (user_id) {
+      updateData.user_id = user_id;
+    }
+    if (date) {
+      updateData.date = new Date(date);
+    }
+
+    await incomeService.updateIncomeData({ updateData, incomeId });
 
     sendResponse(res, 200, true, "Income updated successfully", null);
+  } catch (error) {
+    console.error(error);
+    sendResponse(res, 500, false, "Internal server error", null);
+  }
+};
+
+const deleteIncomeById = async (req, res) => {
+  try {
+    const incomeId = req.params.id;
+
+    // Check if income exists
+    const income = await incomeService.getIncomeById(incomeId);
+    if (!income) {
+      return sendResponse(res, 404, false, "Income not found", null);
+    }
+
+    // Delete income
+    await income.destroy();
+
+    sendResponse(res, 200, true, "Income deleted successfully", null);
   } catch (error) {
     console.error(error);
     sendResponse(res, 500, false, "Internal server error", null);
@@ -120,4 +138,5 @@ module.exports = {
   createIncome,
   getIncomeListByUserId,
   updateIncome,
+  deleteIncomeById
 };

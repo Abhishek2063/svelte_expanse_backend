@@ -17,4 +17,7 @@ router.get(
 // PUT /api/incomes/update/:id
 router.put("/update/:id", verifyToken, incomeController.updateIncome);
 
+// DELETE /api/incomes/delete/:id
+router.delete("/delete/:id", verifyToken, incomeController.deleteIncomeById);
+
 module.exports = router;
