@@ -13,4 +13,7 @@ router.post("/login", userController.loginUser);
 // GET /api/users/:id
 router.get("/:id", verifyToken, userController.getUserById);
 
+// POST /api/users/logout/:id
+router.post("/logout/:id", verifyToken, userController.logoutUserById);
+
 module.exports = router;

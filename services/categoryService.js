@@ -23,6 +23,17 @@ const createCategory = async ({ name, type, user_id }) => {
   }
 };
 
+// Function to get category list  by user id
+const getCategoriesListByUserId = async ({id, type}) => {
+  try {
+    const categoryList = await db.Category.findAll({ where: { user_id: id, type } });
+    return categoryList;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
 module.exports = {
   createCategory,
+  getCategoriesListByUserId,
 };

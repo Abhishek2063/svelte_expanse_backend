@@ -86,7 +86,6 @@ const updateUserToken = async (userId, token) => {
   }
 };
 
-
 // Function to get user by id
 const getUserById = async (id) => {
   try {
@@ -97,9 +96,20 @@ const getUserById = async (id) => {
   }
 };
 
+// Function to logout user
+const logoutUserById = async (id) => {
+  try {
+    const user = await db.User.update({ token: "" }, { where: { id: id } });
+    return user;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
 module.exports = {
   createUser,
   getUserByEmail,
   updateUserToken,
-  getUserById
+  getUserById,
+  logoutUserById,
 };

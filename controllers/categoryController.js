@@ -38,6 +38,25 @@ const createCategory = async (req, res) => {
   }
 };
 
+const getCategoriesListByUserId = async (req, res) => {
+  try {
+    const { id, type } = req.params;
+    // Check if the email exists
+    const categoryList = await categoryService.getCategoriesListByUserId({id, type});
+    sendResponse(
+      res,
+      200,
+      true,
+      "Category details retrieved successfully",
+      categoryList
+    );
+  } catch (error) {
+    console.error(error);
+    sendResponse(res, 500, false, "Internal server error", null);
+  }
+};
+
 module.exports = {
   createCategory,
+  getCategoriesListByUserId,
 };

@@ -72,7 +72,6 @@ const loginUser = async (req, res) => {
   }
 };
 
-// controllers/userController.js
 const getUserById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -85,8 +84,28 @@ const getUserById = async (req, res) => {
   }
 };
 
+const logoutUserById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    // Check if the email exists
+    const user = await userService.getUserById(id);
+    if (!user) {
+      sendResponse(res, 404, false, "User not found", null);
+    } else if (user.token === "" || user.token === null) {
+      sendResponse(res, 404, false, "User is already logout", null);
+    }
+
+    await userService.logoutUserById(id);
+    sendResponse(res, 200, true, "User logout successfully", null);
+  } catch (error) {
+    console.error(error);
+    sendResponse(res, 500, false, "Internal server error", null);
+  }
+};
+
 module.exports = {
   createUser,
   loginUser,
-  getUserById
+  getUserById,
+  logoutUserById,
 };
