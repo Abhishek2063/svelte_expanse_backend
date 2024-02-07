@@ -1,10 +1,13 @@
-   // routes/incomeRoutes.js
-   const express = require('express');
-   const router = express.Router();
-   const incomeController = require('../controllers/incomeController');
-   const verifyToken = require('../middlewares/authMiddleware');
+// routes/incomeRoutes.js
+const express = require("express");
+const router = express.Router();
+const incomeController = require("../controllers/incomeController");
+const verifyToken = require("../middlewares/authMiddleware");
 
-   // POST /api/incomes/create
-   router.post('/create', verifyToken, incomeController.createIncome);
+// POST /api/incomes/create
+router.post("/create", verifyToken, incomeController.createIncome);
 
-   module.exports = router;
+// GET /api/incomes/list/:user_id
+router.get("/list/:user_id", verifyToken, incomeController.getIncomeListByUserId);
+
+module.exports = router;

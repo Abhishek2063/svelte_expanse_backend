@@ -12,7 +12,7 @@ const createIncome = async ({
       description,
       category_id,
       user_id,
-      date : new Date(date),
+      date: new Date(date),
     });
     return newIncome;
   } catch (error) {
@@ -20,6 +20,20 @@ const createIncome = async ({
   }
 };
 
+const getIncomeListByUserId = async ({ userId, offset, limit }) => {
+  try {
+    const { count, rows } = await db.Incomes.findAndCountAll({
+      where: { user_id: userId },
+      offset,
+      limit,
+    });
+    return { count, rows };
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
 module.exports = {
   createIncome,
+  getIncomeListByUserId,
 };
