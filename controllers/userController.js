@@ -65,7 +65,7 @@ const loginUser = async (req, res) => {
     await userService.updateUserToken(user.id, token);
 
     // Return success response with token
-    sendResponse(res, 200, true, "Login successful", { token });
+    sendResponse(res, 200, true, "Login successful", {user, token });
   } catch (error) {
     console.error(error);
     sendResponse(res, 500, false, "Internal server error", null);
