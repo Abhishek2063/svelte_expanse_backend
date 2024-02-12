@@ -5,7 +5,7 @@ const categoryService = require("../services/categoryService");
 const createCategory = async (req, res) => {
   try {
     const { name, type, user_id } = req.body;
-
+console.log(name, type, user_id,"name, type, user_id");
     // Validate user input and check for errors
     const validationErrors = validateCategoryCreateInput({
       name,
