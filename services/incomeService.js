@@ -26,6 +26,7 @@ const getIncomeListByUserId = async ({ userId, offset, limit }) => {
       where: { user_id: userId },
       offset,
       limit,
+      order: [['date', 'DESC']]
     });
     return { count, rows };
   } catch (error) {
